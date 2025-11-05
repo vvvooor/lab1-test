@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru"> <!-- Указываем язык страницы как русский -->
+<head>
+    <meta charset="UTF-8"> <!-- Устанавливаем кодировку страницы как UTF-8 -->
+    <title>Калькулятор</title> <!-- Указываем заголовок страницы -->
+    <link rel="stylesheet" href="styles.css"> <!-- Подключаем файл стилей -->
+</head>
+<body>
+    <div class="calculator"> <!-- Основной контейнер для калькулятора -->
+        <input id="input" type="text" disabled /> <!-- Поле ввода/вывода, только для чтения -->
+        <div class="buttons"> <!-- Контейнер для всех кнопок калькулятора -->
+            <button onclick="addToInput('1')">1</button> <!-- Кнопка для ввода числа 1 -->
+            <button onclick="addToInput('2')">2</button> <!-- Кнопка для ввода числа 2 -->
+            <button onclick="addToInput('3')">3</button> <!-- Кнопка для ввода числа 3 -->
+            <button onclick="addToInput('+')">+</button> <!-- Кнопка для добавления знака "+" -->
+            <button onclick="addToInput('4')">4</button> <!-- Кнопка для ввода числа 4 -->
+            <button onclick="addToInput('5')">5</button> <!-- Кнопка для ввода числа 5 -->
+            <button onclick="addToInput('6')">6</button> <!-- Кнопка для ввода числа 6 -->
+            <button onclick="addToInput('-')">-</button> <!-- Кнопка для добавления знака "-" -->
+            <button onclick="addToInput('7')">7</button> <!-- Кнопка для ввода числа 7 -->
+            <button onclick="addToInput('8')">8</button> <!-- Кнопка для ввода числа 8 -->
+            <button onclick="addToInput('9')">9</button> <!-- Кнопка для ввода числа 9 -->
+            <button onclick="addToInput('*')">*</button> <!-- Кнопка для добавления знака "*" (умножение) -->
+            <button onclick="addToInput('0')">0</button> <!-- Кнопка для ввода числа 0 -->
+            <button onclick="addToInput('.')">.</button> <!-- Кнопка для добавления десятичной точки -->
+            <button onclick="calculate()">=</button> <!-- Кнопка для вычисления результата -->
+            <button onclick="addToInput('/')">/</button> <!-- Кнопка для добавления знака "/" (деление) -->
+            <button onclick="clearInput()">C</button> <!-- Кнопка для очистки ввода -->
+            <button onclick="addToInput('^')">^</button> <!-- Кнопка для добавления символа "^" (возведение в степень) -->
+            <button onclick="squareRoot()">√</button> <!-- Кнопка для вычисления квадратного корня -->
+        </div>
+    </div>
+    <script src="app.js"></script> <!-- Подключаем файл скрипта с логикой приложения -->
+</body>
+</html>
