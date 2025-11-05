@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Тестовая форма</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .msg { display:none; padding:10px; margin-top:10px; border-radius:4px; }
+    .success { background:#e6ffea; border:1px solid #2ecc71; color:#226644; }
+    .error { background:#ffe6e6; border:1px solid #e74c3c; color:#662222; }
+  </style>
+</head>
+<body>
+  <h1>Тестовая форма</h1>
+  <form id="orderForm">
+    <label>Поле 1: <input id="field1" type="text" /></label><br/><br/>
+    <label>Поле 2: <input id="field2" type="text" /></label><br/><br/>
+    <label>Поле 3: <input id="field3" type="text" /></label><br/><br/>
+    <label>Поле 4: <input id="field4" type="text" /></label><br/><br/>
+    <label>Поле 5: <input id="field5" type="text" /></label><br/><br/>
+    <button id="submitBtn" type="submit">Отправить</button>
+  </form>
+
+  <div id="success" class="msg success">Спасибо! Форма отправлена.</div>
+  <div id="error" class="msg error">Пожалуйста, заполните все обязательные поля.</div>
+
+  <script>
+    document.getElementById('orderForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      document.getElementById('success').style.display = 'none';
+      document.getElementById('error').style.display = 'none';
+
+      const fields = [
+        document.getElementById('field1').value.trim(),
+        document.getElementById('field2').value.trim(),
+        document.getElementById('field3').value.trim(),
+        document.getElementById('field4').value.trim(),
+        document.getElementById('field5').value.trim(),
+      ];
+
+      const hasEmpty = fields.some(v => v === '');
+
+      if (hasEmpty) {
+        document.getElementById('error').style.display = 'block';
+      } else {
+        document.getElementById('success').style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
