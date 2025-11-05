@@ -1,0 +1,43 @@
+<!DOCTYPE html> 
+<html lang="ru"> 
+<head>
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Список задач</title> 
+    <link rel="stylesheet" href="списокзадач.css"> 
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+        }
+        .task-list {
+            list-style: none; 
+            padding: 0;
+        }
+        .task {
+            display: flex; 
+            justify-content: space-between; 
+            margin: 5px 0; 
+        }
+        .completed {
+            text-decoration: line-through; 
+        }
+        button {
+            margin: 5px; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Список задач</h1> 
+    <input id="taskInput" type="text" placeholder="Добавить задачу" /> 
+    <button onclick="addTask()">Добавить</button> 
+    <div>
+        <button onclick="filterTasks('all')">Все</button> 
+        <button onclick="filterTasks('completed')">Выполненные</button> 
+        <button onclick="filterTasks('active')">Невыполненные</button> 
+    </div>
+    <ul id="taskList" class="task-list"></ul> 
+    <script src="списокзадач.js"></script> 
+</body>
+</html>
