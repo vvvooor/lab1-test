@@ -1,27 +1,72 @@
+name: Run Pytest
 
-name: Run Python Tests
 on:
   push:
-      branches: [ main ]
+    branches: [ main ]
   pull_request:
-      branches: [ main ]
+    branches: [ main ]
+
 jobs:
-  test:
+  pytest:
     runs-on: ubuntu-latest
+    env:
+      # добавляем корень репозитория и папку lab6 (на случай, если у тебя файлы лежат в lab6/)
+      PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/lab6
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.11"
-          
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r lab6/requirements.txt
-          
-    - name: Run only lab6 test
-      run: python lab6/tests/test_bank.py
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show repo files (debug)
+        run: |
+          echo "Working dir: $(pwd)"
+          ls -la
+          echo "List lab6 (if present):"
+          ls -la lab6 || true
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install pytest; fi
+
+      - name: Show Python sys.path (debug)
+        run: |
+          python - <<'PY'
+import sys, os
+print("Python executable:", sys.executable)
+print("sys.path:")
+for p in sys.path:
+    print("  ", p)
+print("PWD:", os.getcwd())
+PY
+
+      - name: Run pytest
+        # если тесты лежат в tests/ -> pytest
+        # если тесты лежат в lab6/tests -> pytest lab6/tests
+        run: |
+          # пробуем запустить pytest против папки tests, а если нет - пробуем lab6/tests
+          if [ -d "tests" ]; then pytest -q --maxfail=1 --junitxml=results.xml; \
+          elif [ -d "lab6/tests" ]; then pytest lab6/tests -q --maxfail=1 --junitxml=results.xml; \
+          else pytest -q --maxfail=1 --junitxml=results.xml; fi
+        # сохраняем вывод независимо от результата
+        continue-on-error: false
+
+      - name: Upload test results (JUnit)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-results
+          path: results.xml
