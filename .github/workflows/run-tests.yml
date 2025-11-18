@@ -23,4 +23,4 @@ jobs:
         python -m pip install --upgrade pip
           
     - name: Run only lab6 test
-      run: pytest -v lab6/tests/test_bank.py
+      run: python lab6/tests/test_bank.py
