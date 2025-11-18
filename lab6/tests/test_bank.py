@@ -6,7 +6,6 @@ from bank import Account, InsufficientFundsError
 def acc():
     return Account("Test", 100.0)
 
-# параметризация для deposit
 @pytest.mark.parametrize(
     "initial, amount, expected",
     [
@@ -27,7 +26,6 @@ def test_deposit_invalid():
     with pytest.raises(ValueError):
         a.deposit(-5)
 
-# параметризация для withdraw
 @pytest.mark.parametrize(
     "initial, amount, expected",
     [
@@ -49,7 +47,6 @@ def test_withdraw_invalid_and_insufficient():
     with pytest.raises(InsufficientFundsError):
         a.withdraw(100)
 
-# тесты перевода
 @pytest.mark.parametrize(
     "from_init,to_init,amount,expected_from,expected_to",
     [
@@ -72,7 +69,6 @@ def test_transfer_insufficient_and_invalid_target():
     with pytest.raises(TypeError):
         a.transfer_to("не счёт", 10)
 
-# дополнительный тест: строковое представление (необязательно)
 def test_repr_and_get_balance():
     a = Account("Ivan", 123.45)
     assert "Ivan" in repr(a)

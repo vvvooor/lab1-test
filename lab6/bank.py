@@ -41,7 +41,6 @@ class Account:   #Здесь реализованы методы deposit, withdr
         """Перевод средств на другой счёт. Проверяет тип и баланс."""
         if not isinstance(other, Account):
             raise TypeError("Перевод возможен только на другой Account")
-        # withdraw и deposit выполнят проверки
         self.withdraw(amount)
         other.deposit(amount)
 
